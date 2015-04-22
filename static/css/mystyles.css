@@ -1,0 +1,18 @@
+.mainheader{max-height: 100px; }
+.headerList li {
+    float: left;
+    font-size: 18px;
+    list-style: outside none none;
+    /* padding: 31px; */
+    margin-left: 25px;
+    margin-top: 28px;
+   	color: #858585;
+}
+.headerList li.home:hover{border-bottom:2px solid red;}
+.headerList li.forum:hover{border-bottom:2px solid blue;}
+.headerList li.what:hover{border-bottom:2px solid green;}
+.headerList li.contact:hover{border-bottom:2px solid orange;}
+
+.middleContainer{background-image:url("/images/bg.jpg"); }
+
+.headerList li.home{border-bottom:2px solid red !important;}

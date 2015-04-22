@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<div class="container">
+	<!-- Navigation here -->
+	<div class="mainheader">
+	<div class="col-md-3">
+		<img alt="" src="{{ url_for('static', filename='images/image.png') }}">
+	</div>
+	<div class="col-md-6 pull-right">
+		<ul class="headerList">
+			<li class="home">Home</li>
+			<li class="forum">Forums</li>
+			<li class="what">What is 3G's?</li>
+			<li class="contact">Contact Us</li>
+		</ul>
+	</div>
+	</div>
+	<div class="middleContainer">
+		<div id="search-form">
+			<form class="form-container" action="/" method="POST">
+				<input type="text" class="search-field" name="hashtag" value="Type search text here..." />
+				<div class="submit-container">
+					<input type="submit" value="" class="submit" />
+				</div>
+			</form>
+			<div class="popup">
+				<p>Please fill out this field.</p>
+			</div>
+		</div>
+		<div id="footer">
+			&#169; Copyright by 3G's - Follow us on <a href="">Facebook</a> and <a href="">Twitter</a>!
+		</div>
+	</div>
+</div>
+{% endblock main %}
