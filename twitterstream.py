@@ -19,13 +19,11 @@ class StreamListener(tweepy.StreamListener):
 	stopAt = 100
 	
 	def on_connect(self):
-		print "Stream Starting..."
+		print( "Stream Starting...")
 
 	def on_status(self, status):
-		print self
-		print status
+		# We can't get status here... No reason
 		return
-
 
 	# method called when raw data is received from connection
 	def on_data(self, data):
@@ -35,14 +33,14 @@ class StreamListener(tweepy.StreamListener):
 		if 'geo' in decoded:
 			if decoded['geo']:
 				StreamListener.tweetCounter = StreamListener.tweetCounter + 1
-				print StreamListener.tweetCounter
+				print(StreamListener.tweetCounter)
 				if StreamListener.tweetCounter < StreamListener.stopAt:
 					tweet = {}
 					tweet['screen_name'] = '@'+decoded['user']['screen_name']
 					tweet['text'] = decoded['text'].encode('ascii', 'ignore')
 					tweet['coord'] = decoded['geo']['coordinates']
 					tweet['created_at'] = decoded['created_at']
-					print 'A tweet received'
+					print( 'A tweet received')
 					# publish to 'tweet_stream' channel
 					red.publish(tweet_stream, json.dumps(tweet))
 					return True
@@ -50,9 +48,9 @@ class StreamListener(tweepy.StreamListener):
 					return False
 	
 	def on_error(self, status):
-		print status
+		print(status)
 
 	def on_timeout(self):
-		print "Timeout..."
+		print("Timeout...")
 		time.sleep(10)
 		return
