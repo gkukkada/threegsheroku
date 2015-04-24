@@ -19,7 +19,7 @@ class StreamListener(tweepy.StreamListener):
 	stopAt = 100
 	
 	def on_connect(self):
-		print 'Stream starting...'
+		print "Stream Starting..."
 
 	def on_status(self, status):
 		print self

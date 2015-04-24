@@ -13,7 +13,7 @@ app = Flask(__name__)
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 import tweepy
-from tstream import StreamListener
+from twitterstream import StreamListener
 import redis
 red = redis.StrictRedis()
 
