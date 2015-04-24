@@ -1,1 +1,70 @@
-{{ search }}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Tweet Search Map</title>
+    <style type="text/css">
+    .body {
+    	height: 500px;
+    }
+    </style>
+	
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+	<script src="{{ url_for('static', filename='js/gmap.js') }}" ></script>
+
+	<script type="text/javascript">
+		$(document).ready(function () {
+		    var map = new GMaps({
+		        div: '#basic_map',
+		        lat: 51.508742,
+		        lng: -0.120850,
+		        zoom: 2,
+		        zoomControl: true,
+		        zoomControlOpt: {
+		            style: 'SMALL',
+		            position: 'TOP_LEFT'
+		        },
+		        panControl: false
+		    });
+
+		    // listen for events from /stream decorator
+var source = new EventSource(
+    "/map-stream"
+);
+console.log(source);
+source.onmessage = function(event){
+	// convert event.data str to obj
+	event_source_tweet = JSON.parse(event.data);
+    var marker_info = {
+    	username: event_source_tweet.screen_name,
+    	text: event_source_tweet.text,
+    	created_at: event_source_tweet.created_at,
+    	location: event_source_tweet.coord
+    };
+    if (typeof marker_info.location != 'undefined'){
+		console.log(marker_info.location[1]);
+		map.addMarker({
+		lat: marker_info.location[0],
+		lng: marker_info.location[1],
+		title: 'Lima',
+		click: function(e) {
+		alert('You clicked in this marker');
+		}
+		});
+
+    }
+    
+    // really marker gonna here
+    //var markerView = new MarkerView({model: map, marker_info: marker_info});
+    //markerView.render();
+};
+
+		});
+	</script>
+   
+</head>
+<body>
+	<div id="basic_map" style="height: 500px; position: relative; background-color: rgb(229, 227, 223); overflow: hidden;">
+</body>
+</html>

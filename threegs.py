@@ -3,47 +3,70 @@ import os
 from pprint import pprint
 
 # Flask
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, stream_with_context, Response
+
+from config import CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET
+
 app = Flask(__name__)
 
 # set the secret key.  keep this really secret:
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
-@app.route("/", methods=['GET', 'POST'])
-def index():
-	if 'hashtag' in session:
-		session.pop('hashtag', None)
+import tweepy
+from tstream import StreamListener
+import redis
+red = redis.StrictRedis()
 
+from random import randint
+
+# OAuth process
+auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
+
+@app.route("/", methods=['GET', 'POST'])
+def index_view():
 	if request.method == 'POST':
-		""" get the form data using request form"""
 		session['hashtag'] = request.form['hashtag']
-		return redirect(url_for('map_view'))
+		return redirect(url_for('map'))
 	return render_template('handle/home.html')
 
-@app.route('/map/')
-def map_view():
-	if 'hashtag' in session:
-		return render_template('handle/map.html')
-	else:
-		return redirect(url_for('index'))
+@app.route("/map", methods=['GET', 'POST'])
+def map():
+	""" get the form data using request form"""
+	hashtag = session['hashtag']
+	track = ['#{}'.format(hashtag)]
 
-import tweepy
-consumer_key = 'DZxeCAbMFENbXFR8wsYnx0jDv'
-consumer_secret = 'Ph6CfSK63hXwR83QqUhxG53olOkf1p0o4CuzYOitgx49NisDc8'
-access_token = '82060181-l7n0gUqTkaNpwVfneN27OCsYfvD8pzzzvLp1QKhEH'
-access_token_secret = 'pfjUFZ7UNApyw3th9ANreI68uDJ9J0s7M9nt7oJgbaalk'
+	""" gonna starts here """
+	#listener = StreamListener()
+	session['random_userid'] = randint(1, 999)
+	StreamListener.userid = session['random_userid']
+	#listener.userid = session['random_userid']
+	#listener.stopAt = 10 # Time out after 10 number of tweets
+	stream = tweepy.Stream(auth, StreamListener())
+	stream.filter(track=track,async=True)
+	redirect(url_for('map_stream'))
+	return render_template('handle/map.html')
 
-@app.route('/test/')
+@app.route('/map-stream')
+def map_stream():
+# we will use Pub/Sub process to send real-time tweets to client
+	def event_stream():
+		# instantiate pubsub
+		pubsub = red.pubsub()
+		# subscribe to tweet_stream channel
+		pubsub.subscribe(session['random_userid'])
+    # initiate server-sent events on messages pushed to channel
+		for message in pubsub.listen():
+			yield 'data: %s\n\n' % message['data']
+	return Response(stream_with_context(event_stream()), mimetype="text/event-stream")
+
+
+
+@app.route('/test')
 def test_view():
-	auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-	auth.set_access_token(access_token, access_token_secret)
-	api = tweepy.API(auth)
-
-	stream = []
-	for tweet in tweepy.Cursor(api.search, q='trending').items(10):
-		print tweet.geo
-		stream.append(tweet)
-	return render_template('test.html', search=stream)
+	session['close'] = "yesiamgonnadelete"
+	return redirect(url_for('index_view'))
+	
 
 if __name__ == '__main__':
 	app.run(debug=True)
