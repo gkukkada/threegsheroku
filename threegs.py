@@ -37,11 +37,9 @@ def map():
 	track = ['#{}'.format(hashtag)]
 
 	""" gonna starts here """
-	#listener = StreamListener()
 	session['random_userid'] = randint(1, 999)
 	StreamListener.userid = session['random_userid']
-	#listener.userid = session['random_userid']
-	#listener.stopAt = 10 # Time out after 10 number of tweets
+
 	stream = tweepy.Stream(auth, StreamListener())
 	stream.filter(track=track,async=True)
 	redirect(url_for('map_stream'))
@@ -49,18 +47,12 @@ def map():
 
 @app.route('/map-stream')
 def map_stream():
-# we will use Pub/Sub process to send real-time tweets to client
 	def event_stream():
-		# instantiate pubsub
 		pubsub = red.pubsub()
-		# subscribe to tweet_stream channel
 		pubsub.subscribe(session['random_userid'])
-    # initiate server-sent events on messages pushed to channel
 		for message in pubsub.listen():
 			yield 'data: %s\n\n' % message['data']
 	return Response(stream_with_context(event_stream()), mimetype="text/event-stream")
-
-
 
 @app.route('/test')
 def test_view():
