@@ -25,7 +25,6 @@ auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 
 @app.route("/", methods=['GET', 'POST'])
 def index_view():
-	max_client = redis.client
 	if request.method == 'POST':
 		session['hashtag'] = request.form['hashtag']
 		return redirect(url_for('map'))
