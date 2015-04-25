@@ -64,7 +64,7 @@ def map():
 
 	import signal
 	signal.signal(signal.SIGALRM, handler)
-	signal.alarm(300)
+	signal.alarm(1000)
 	try:
 		main_stream()
 	except Exception:
