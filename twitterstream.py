@@ -4,7 +4,13 @@
 from flask import Flask, request
 from config import CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET
 
-import tweepy, redis
+import os
+import redis
+
+redis_url = os.getenv('REDISTOGO_URL', 'redis://localhost:6379')
+redis = redis.from_url(redis_url)
+
+import tweepy
 import json
 
 from pprint import pprint
