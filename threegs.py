@@ -39,7 +39,7 @@ def map():
 		track = hashtag
 	else:
 		#track = ['#{}'.format(hashtag)]
-		track = hashtag
+		track = "hashtag"
 
 	""" gonna starts here """
 	session['random_userid'] = randint(1, 999)
