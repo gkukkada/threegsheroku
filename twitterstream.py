@@ -35,14 +35,12 @@ class StreamListener(tweepy.StreamListener):
 		if 'geo' in decoded:
 			if decoded['geo']:
 				StreamListener.tweetCounter = StreamListener.tweetCounter + 1
-				print(StreamListener.tweetCounter)
 				if StreamListener.tweetCounter < StreamListener.stopAt:
 					tweet = {}
 					tweet['screen_name'] = '@'+decoded['user']['screen_name']
 					tweet['text'] = decoded['text'].encode('ascii', 'ignore')
 					tweet['coord'] = decoded['geo']['coordinates']
 					tweet['created_at'] = decoded['created_at']
-					print( 'A tweet received')
 					# publish to 'tweet_stream' channel
 					redis.publish(tweet_stream, json.dumps(tweet))
 					return True
@@ -53,6 +51,7 @@ class StreamListener(tweepy.StreamListener):
 		print(status)
 
 	def on_timeout(self):
+		# this time is not worked
 		print("Timeout...")
 		time.sleep(10)
 		return
