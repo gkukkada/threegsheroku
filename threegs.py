@@ -52,9 +52,13 @@ def map():
 		redirect(url_for('map_stream'))
 
 	def close_stream():
+		""" get the client list and delete """
+		obj = redis.client_list(tweet_stream)
+		redis_client_list = obj[0]['addr']
+		pprint(redis_client_list)
+		redis.client_kill(redis_client_list)
 		stream = tweepy.Stream(auth, StreamListener())
 		stream.disconnect()
-		return redirect(url_for('close_stream'))
 
 	import signal
 	signal.signal(signal.SIGALRM, handler)
@@ -78,6 +82,7 @@ def map_stream():
 
 @app.route('/close-stream')
 def close_stream():
+	pprint(redis.quit)
 	return "Finish"
 
 @app.route('/test')

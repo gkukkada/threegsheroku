@@ -29,6 +29,7 @@ class StreamListener(tweepy.StreamListener):
 	# method called when raw data is received from connection
 	def on_data(self, data):
 		tweet_stream =  StreamListener.userid
+		redis.client_setname(tweet_stream) #Set Redis client name
 		decoded = json.loads(data)
 		# listen only for tweets that is geo-location enabled
 		if 'geo' in decoded:
