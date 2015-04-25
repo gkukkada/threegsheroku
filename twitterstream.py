@@ -43,7 +43,7 @@ class StreamListener(tweepy.StreamListener):
 					tweet['created_at'] = decoded['created_at']
 					print( 'A tweet received')
 					# publish to 'tweet_stream' channel
-					reids.publish(tweet_stream, json.dumps(tweet))
+					redis.publish(tweet_stream, json.dumps(tweet))
 					return True
 				else:
 					return False
