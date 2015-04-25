@@ -39,13 +39,15 @@
 			    if (typeof marker_info.location != 'undefined'){
 					console.log(marker_info.location[1]);
 					map.addMarker({
-					lat: marker_info.location[0],
-					lng: marker_info.location[1],
-					title: 'Lima',
-					click: function(e) {
-					alert('You clicked in this marker');
-					}
+						lat: marker_info.location[0],
+						lng: marker_info.location[1],
+						title: 'Lima',
+						click: function(e) {
+							alert('You clicked in this marker');
+						}
 					});
+			    } else {
+			    	console.log("No event here")
 			    }
 			};
 		});
