@@ -17,7 +17,7 @@ import time
 # listener that handles streaming data
 class StreamListener(tweepy.StreamListener):
 	tweetCounter = 0
-	stopAt = 200 # no of twitter count
+	stopAt = 200
 	
 	def on_connect(self):
 		print( "Stream Starting...")
@@ -29,7 +29,7 @@ class StreamListener(tweepy.StreamListener):
 	# method called when raw data is received from connection
 	def on_data(self, data):
 		tweet_stream =  StreamListener.userid
-		redis.client_setname(tweet_stream) #Set Redis client name
+		redis.client_setname(tweet_stream)
 		decoded = json.loads(data)
 		# listen only for tweets that is geo-location enabled
 		if 'geo' in decoded:
