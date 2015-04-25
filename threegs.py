@@ -1,5 +1,3 @@
-#Authors: threeGs(threegsksu@gmail.com)
-
 # Python
 import os 
 from pprint import pprint
