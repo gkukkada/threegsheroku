@@ -1,6 +1,6 @@
 Flask==0.10.1
 gevent==1.0.1
--e git://github.com/ellimilial/gevent.git@master
+-e git://github.com/ellimilial/gevent.git@master#egg=gevent
 greenlet==0.4.5
 gunicorn==19.3.0
 itsdangerous==0.24
