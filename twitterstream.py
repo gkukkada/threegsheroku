@@ -17,7 +17,7 @@ import time
 # listener that handles streaming data
 class StreamListener(tweepy.StreamListener):
 	tweetCounter = 0
-	stopAt = 100
+	stopAt = 200
 	
 	def on_connect(self):
 		print( "Stream Starting...")

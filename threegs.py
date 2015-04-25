@@ -30,6 +30,7 @@ def index_view():
 		return redirect(url_for('map'))
 	return render_template('handle/home.html')
 
+
 @app.route("/map", methods=['GET', 'POST'])
 def map():
 	""" get the form data using request form"""
@@ -39,10 +40,25 @@ def map():
 	""" gonna starts here """
 	session['random_userid'] = randint(1, 999)
 	StreamListener.userid = session['random_userid']
+	
+	###########################################
+	def handler(signum, frame):
+		print("Forever is over")
+		raise Exception("end of time")
 
-	stream = tweepy.Stream(auth, StreamListener())
-	stream.filter(track=track,async=True)
-	redirect(url_for('map_stream'))
+	def main_stream():
+		stream = tweepy.Stream(auth, StreamListener())
+		stream.filter(track=track,async=True)
+		redirect(url_for('map_stream'))
+
+	import signal
+	signal.signal(signal.SIGALRM, handler)
+	signal.alarm(300)
+	try:
+		main_stream()
+	except Exception:
+		print("function terminate")
+
 	return render_template('handle/map.html')
 
 @app.route('/map-stream')
