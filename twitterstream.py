@@ -4,14 +4,13 @@
 from flask import Flask, request
 from config import CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET
 
-import tweepy
-from store import redis
+import tweepy, redis
 import json
 
 from pprint import pprint
 import time
 
-#red = redis.Redis()
+red = redis.StrictRedis()
 
 
 # listener that handles streaming data
@@ -43,7 +42,7 @@ class StreamListener(tweepy.StreamListener):
 					tweet['created_at'] = decoded['created_at']
 					print( 'A tweet received')
 					# publish to 'tweet_stream' channel
-					redis.publish(tweet_stream, json.dumps(tweet))
+					red.publish(tweet_stream, json.dumps(tweet))
 					return True
 				else:
 					return False
