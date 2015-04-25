@@ -1,1 +1,1 @@
-web: gunicorn  -t 99999 threegs:app --worker-class eventlet
+web: gunicorn -w 4 -t 99999 threegs:app
