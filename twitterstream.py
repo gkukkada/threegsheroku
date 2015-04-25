@@ -4,19 +4,14 @@
 from flask import Flask, request
 from config import CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET
 
-import os
-import redis
-
-redis_url = os.getenv('REDISTOGO_URL', 'redis://localhost:6379')
-redis = redis.from_url(redis_url)
-
 import tweepy
+from store import redis
 import json
 
 from pprint import pprint
 import time
 
-red = redis.StrictRedis()
+red = redis.Redis()
 
 
 # listener that handles streaming data
