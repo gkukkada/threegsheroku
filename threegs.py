@@ -54,6 +54,7 @@ def map():
 	def close_stream():
 		stream = tweepy.Stream(auth, StreamListener())
 		stream.disconnect()
+		return redirect(url_for('close_stream'))
 
 	import signal
 	signal.signal(signal.SIGALRM, handler)
@@ -74,6 +75,10 @@ def map_stream():
 		for message in pubsub.listen():
 			yield 'data: %s\n\n' % message['data']
 	return Response(stream_with_context(event_stream()), mimetype="text/event-stream")
+
+@app.route('/close-stream')
+def close_stream():
+	return "Finish"
 
 @app.route('/test')
 def test_view():

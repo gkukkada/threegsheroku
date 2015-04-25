@@ -1,1 +1,1 @@
-web: gunicorn -w 4 -t 99999 threegs:app
+gunicorn --worker-class=gevent -t 99999 threegs:app
