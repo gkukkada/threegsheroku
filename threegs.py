@@ -35,7 +35,6 @@ def index_view():
 def map():
 	""" get the form data using request form"""
 	hashtag = session['hashtag']
-	# Check hash in string
 	if hashtag[0] == '#':
 		track = hashtag
 	else:
