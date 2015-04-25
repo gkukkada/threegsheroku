@@ -51,12 +51,17 @@ def map():
 		stream.filter(track=track,async=True)
 		redirect(url_for('map_stream'))
 
+	def close_stream():
+		stream = tweepy.Stream(auth, StreamListener())
+		stream.disconnect()
+
 	import signal
 	signal.signal(signal.SIGALRM, handler)
-	signal.alarm(300)
+	signal.alarm(60)
 	try:
 		main_stream()
 	except Exception:
+		close_stream()
 		print("function terminate")
 
 	return render_template('handle/map.html')
