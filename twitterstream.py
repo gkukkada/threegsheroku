@@ -1,3 +1,5 @@
+#authors: threegs(threegsksu@gmail.com)
+
 #!venv/bin/python
 
 # all the imports
