@@ -25,6 +25,7 @@ auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 
 @app.route("/", methods=['GET', 'POST'])
 def index_view():
+	max_client = redis.client
 	if request.method == 'POST':
 		session['hashtag'] = request.form['hashtag']
 		return redirect(url_for('map'))
@@ -62,7 +63,7 @@ def map():
 
 	import signal
 	signal.signal(signal.SIGALRM, handler)
-	signal.alarm(60)
+	signal.alarm(300)
 	try:
 		main_stream()
 	except Exception:
