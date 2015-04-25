@@ -47,7 +47,9 @@
 						}
 					});
 			    } else {
-			    	window.location.replace("{{ url_for('index_view') }}");
+			    	setTimeout(function(){
+			    		window.location.replace("{{ url_for('index_view') }}");
+			    	}, 300000);
 			    }
 			};
 		});
