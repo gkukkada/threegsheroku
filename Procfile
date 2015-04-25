@@ -1,1 +1,1 @@
-web: gunicorn  threegs:app
+web: gunicorn  -t 99999 threegs:app
