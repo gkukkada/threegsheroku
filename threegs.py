@@ -38,7 +38,7 @@ def map():
 	if hashtag[0] == '#':
 		track = hashtag
 	else:
-		track = ['#%s'.format(hashtag)]
+		track = ['{}'.format(hashtag)]
 		#track = ['hashtag']
 
 	""" gonna starts here """
