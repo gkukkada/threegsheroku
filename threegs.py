@@ -14,8 +14,10 @@ app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 import tweepy
 from twitterstream import StreamListener
+
+# for redis
 from store import redis
-red = redis.Redis()
+#red = redis.Redis()
 
 from random import randint
 
@@ -48,7 +50,7 @@ def map():
 @app.route('/map-stream')
 def map_stream():
 	def event_stream():
-		pubsub = red.pubsub()
+		pubsub = redis.pubsub()
 		pubsub.subscribe(session['random_userid'])
 		for message in pubsub.listen():
 			yield 'data: %s\n\n' % message['data']
