@@ -37,13 +37,12 @@
 			    	location: event_source_tweet.coord
 			    };
 			    if (typeof marker_info.location != 'undefined'){
-					console.log(marker_info.location[1]);
 					map.addMarker({
 						lat: marker_info.location[0],
 						lng: marker_info.location[1],
 						title: 'Lima',
 						click: function(e) {
-							console.log("you just clicked")
+							alert(marker_info.username + ':' +  marker_info.text);
 						}
 					});
 			    } else {
