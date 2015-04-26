@@ -38,8 +38,8 @@ def map():
 	if hashtag[0] == '#':
 		track = hashtag
 	else:
-		#track = ['{}'.format(hashtag)]
-		track = hashtag		
+		track = ['#{}'.format(hashtag)]
+		#track = hashtag		
 		#track = ['%s'%hashtag]
 		#track = ['hashtag']
 
