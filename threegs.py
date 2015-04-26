@@ -39,8 +39,8 @@ def map():
 		track = hashtag
 	else:
 		#track = ['{}'.format(hashtag)]
-		
-		track = ['%s'%hashtag]
+		track = hashtag		
+		#track = ['%s'%hashtag]
 		#track = ['hashtag']
 
 	""" gonna starts here """
