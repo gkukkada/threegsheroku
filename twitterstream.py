@@ -36,16 +36,17 @@ class StreamListener(tweepy.StreamListener):
 
 		# This function is need to find out given hastag in particular locatio
 		# If then make inside the geo location
-		i = 0
-		num = len(decoded['entities']['hashtags'])
-		bag = []
-		while i < num:
-			bag.append(decoded['entities']['hashtags'][i]['text'])
-			i += 1
-		hashtag = StreamListener.hashtag.replace('#', '')
-		
-		if hashtag in bag:
-			pass
+		if 'entities' in decoded:
+			i = 0
+			num = len(decoded['entities']['hashtags'])
+			bag = []
+			while i < num:
+				bag.append(decoded['entities']['hashtags'][i]['text'])
+				i += 1
+			hashtag = StreamListener.hashtag.replace('#', '')
+			
+			if hashtag in bag:
+				pass
 		
 		# listen only for tweets that is geo-location enabled
 		if 'geo' in decoded:
