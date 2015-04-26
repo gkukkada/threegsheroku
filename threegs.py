@@ -44,6 +44,8 @@ def map():
 	""" gonna starts here """
 	session['random_userid'] = randint(1, 999)
 	StreamListener.userid = session['random_userid']
+	StreamListener.hashtag = track
+
 	
 	###########################################
 	def handler(signum, frame):
@@ -52,8 +54,7 @@ def map():
 
 	def main_stream():
 		stream = tweepy.Stream(auth, StreamListener())
-		stream.filter(track=track, locations = [-180,-90,180,90],async=True)
-
+		stream.filter(locations = [-74,40,-73,4],async=True)#track=[track]
 		redirect(url_for('map_stream'))
 
 	def close_stream():
