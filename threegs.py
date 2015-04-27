@@ -35,11 +35,11 @@ def index_view():
 def map():
 	""" get the form data using request form"""
 	hashtag = session['hashtag']
-	#i = list(hashtag)
-	if hashtag[0] == '#':
+	find = hashtag.find('#')
+	if find == 0:
 		track = hashtag
 	else:
-		track = ['#{}'.format(hashtag)]
+		track = '#{}'.format(hashtag)
 
 	""" gonna starts here """
 	session['random_userid'] = randint(1, 999)
