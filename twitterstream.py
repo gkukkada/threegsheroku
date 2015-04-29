@@ -46,23 +46,22 @@ class StreamListener(tweepy.StreamListener):
 			hashtag = StreamListener.hashtag.replace('#', '')
 			
 			if hashtag in bag:
-				pass
 		
-		# listen only for tweets that is geo-location enabled
-		if 'geo' in decoded:
-			if decoded['geo']:
-				StreamListener.tweetCounter = StreamListener.tweetCounter + 1
-				if StreamListener.tweetCounter < StreamListener.stopAt:
-					tweet = {}
-					tweet['screen_name'] = '@'+decoded['user']['screen_name']
-					tweet['text'] = decoded['text'].encode('ascii', 'ignore')
-					tweet['coord'] = decoded['geo']['coordinates']
-					tweet['created_at'] = decoded['created_at']
-					# publish to 'tweet_stream' channel
-					redis.publish(tweet_stream, json.dumps(tweet))
-					return True
-				else:
-					return False
+				# listen only for tweets that is geo-location enabled
+				if 'geo' in decoded:
+					if decoded['geo']:
+						StreamListener.tweetCounter = StreamListener.tweetCounter + 1
+						if StreamListener.tweetCounter < StreamListener.stopAt:
+							tweet = {}
+							tweet['screen_name'] = '@'+decoded['user']['screen_name']
+							tweet['text'] = decoded['text'].encode('ascii', 'ignore')
+							tweet['coord'] = decoded['geo']['coordinates']
+							tweet['created_at'] = decoded['created_at']
+							# publish to 'tweet_stream' channel
+							redis.publish(tweet_stream, json.dumps(tweet))
+							return True
+						else:
+							return False
 	
 	def on_error(self, status):
 		print(status)
