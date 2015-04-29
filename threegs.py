@@ -39,8 +39,8 @@ def map():
 	if find == 0:
 		track = hashtag
 	else:
-		track = hashtag
-		#track = '#{}'.format(hashtag)
+		#track = hashtag
+		track = '#{}'.format(hashtag)
 
 	""" gonna starts here """
 	session['random_userid'] = randint(1, 999)
@@ -55,8 +55,8 @@ def map():
 
 	def main_stream():
 		stream = tweepy.Stream(auth, StreamListener())
-		stream.filter(track=[hashtag],async=False)
-		#stream.filter(locations = [-122.75,36.8,-121.75,37.8], async=True)
+		#stream.filter(track=[hashtag],async=False)
+		stream.filter(locations = [-122.75,36.8,-121.75,37.8], async=True)
 		redirect(url_for('map_stream'))
 
 	def close_stream():
