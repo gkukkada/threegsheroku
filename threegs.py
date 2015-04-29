@@ -56,7 +56,7 @@ def map():
 	def main_stream():
 		stream = tweepy.Stream(auth, StreamListener())
 		#stream.filter(track=[hashtag],async=False)
-		stream.filter(locations = [-180,90,-180,90], async=True)
+		stream.filter(locations = [-180,-90,180,90], async=True)
 		redirect(url_for('map_stream'))
 
 	def close_stream():
