@@ -28,7 +28,6 @@
 			);
 			console.log(source);
 			source.onmessage = function(event){
-				console.log(event.data);
 				// convert event.data str to obj
 				event_source_tweet = JSON.parse(event.data);
 			    var marker_info = {

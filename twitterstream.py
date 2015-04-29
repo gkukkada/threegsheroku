@@ -68,7 +68,6 @@ class StreamListener(tweepy.StreamListener):
 						# Test with bounding 
 					elif 'place' in decoded:
 						if decoded['place']:
-							pprint(decoded)
 							#pprint(decoded['place']['bounding_box']['coordinates'])
 							obj = decoded['place']['bounding_box']['coordinates'][0]
 						
@@ -84,8 +83,6 @@ class StreamListener(tweepy.StreamListener):
 
 							lat = (lat1 + lat2 + lat3 + lat4) / 4
 							lon = (lon1 + lon2 + lon3 + lon4) / 4
-							pprint(lat)
-							pprint(lon)
 							tweet['coord'] = [lon, lat]
 							redis.publish(tweet_stream, json.dumps(tweet))
 					else:
