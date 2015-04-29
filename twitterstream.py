@@ -86,7 +86,7 @@ class StreamListener(tweepy.StreamListener):
 							lon = (lon1 + lon2 + lon3 + lon4) / 4
 							pprint(lat)
 							pprint(lon)
-							tweet['coord'] = [lat, lon]
+							tweet['coord'] = [lon, lat]
 							redis.publish(tweet_stream, json.dumps(tweet))
 					else:
 						pass
