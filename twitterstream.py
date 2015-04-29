@@ -49,19 +49,46 @@ class StreamListener(tweepy.StreamListener):
 		
 				# listen only for tweets that is geo-location enabled
 				if 'geo' in decoded:
+					
+					tweet = {}
+					tweet['screen_name'] = '@'+decoded['user']['screen_name']
+					tweet['text'] = decoded['text'].encode('ascii', 'ignore')
+					tweet['created_at'] = decoded['created_at']
+
 					if decoded['geo']:
 						StreamListener.tweetCounter = StreamListener.tweetCounter + 1
 						if StreamListener.tweetCounter < StreamListener.stopAt:
-							tweet = {}
-							tweet['screen_name'] = '@'+decoded['user']['screen_name']
-							tweet['text'] = decoded['text'].encode('ascii', 'ignore')
 							tweet['coord'] = decoded['geo']['coordinates']
-							tweet['created_at'] = decoded['created_at']
 							# publish to 'tweet_stream' channel
 							redis.publish(tweet_stream, json.dumps(tweet))
 							return True
 						else:
 							return False
+
+						# Test with bounding 
+					else 'place' in decoded:
+						if decoded['place']:
+							pprint(decoded)
+							#pprint(decoded['place']['bounding_box']['coordinates'])
+							obj = decoded['place']['bounding_box']['coordinates'][0]
+						
+							lat1 = obj[0][0]
+							lat2 = obj[1][0]
+							lat3 = obj[2][0]
+							lat4 = obj[3][0]
+
+							lon1 = obj[0][1]
+							lon2 = obj[1][1]
+							lon3 = obj[2][1]
+							lon4 = obj[3][1]
+
+							lat = (lat1 + lat2 + lat3 + lat4) / 4
+							lon = (lon1 + lon2 + lon3 + lon4) / 4
+							pprint(lat)
+							pprint(lon)
+							tweet['coord'] = {lat, lon}
+							redis.publish(tweet_stream, json.dumps(tweet))
+
 	
 	def on_error(self, status):
 		print(status)
