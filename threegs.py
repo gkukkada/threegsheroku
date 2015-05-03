@@ -34,19 +34,16 @@ def index_view():
 def map():
 	""" get the form data using request form"""
 	hashtag = session['hashtag']
-	#find = hashtag.find('san francisco')
-	if  hashtag =='san francisco':
-		loc = '-122.75,36.8,-121.75,37.8'
-	elif hashtag == 'new york city':
-		loc = '-74,40,-73,41'
-		#track = '#{}'.format(hashtag)
-	else : 
-		loc = '-180,-90,180,90'	
-
+	find = hashtag.find('#')
+        if find == 0:
+                track = hashtag
+        else:
+                track = hashtag
+                #track = '#{}'.format(hashtag)
 	""" gonna starts here """
 	session['random_userid'] = randint(1, 999)
 	StreamListener.userid = session['random_userid']
-	StreamListener.hashtag = loc
+	StreamListener.hashtag = track
 
 	
 	###########################################
@@ -56,8 +53,8 @@ def map():
 
 	def main_stream():
 		stream = tweepy.Stream(auth, StreamListener())
-		#stream.filter(track=[hashtag],async=False)
-		stream.filter(locations = [loc], async=False)
+		stream.filter(track=[hashtag],async=False)
+		#stream.filter(locations = [loc], async=False)
 		redirect(url_for('map_stream'))
 
 	def close_stream():
