@@ -53,7 +53,7 @@ def map():
 
 	def main_stream():
 		stream = tweepy.Stream(auth, StreamListener())
-		stream.filter(track=[hashtag],async=False)
+		stream.filter(track=[hashtag],async=True)
 		redirect(url_for('map_stream'))
 
 	def close_stream():
